@@ -1,98 +1,90 @@
-CREATE TABLE Driver
+CREATE TABLE X_Driver
 (
-    name VARCHAR(50),
-    PRIMARY KEY (name)
+    name VARCHAR(50) PRIMARY KEY
 );
 
-CREATE TABLE Reaction
+CREATE TABLE X_Reaction
 (
-    name VARCHAR(50),
-    PRIMARY KEY (name)
+    name VARCHAR(50) PRIMARY KEY
 );
 
-CREATE TABLE Weapon
+CREATE TABLE X_Weapon
 (
-    name VARCHAR(50),
-    PRIMARY KEY (name)
+    name VARCHAR(50) PRIMARY KEY
 );
 
-CREATE TABLE Element
+CREATE TABLE X_Element
 (
-    name VARCHAR(50),
-    PRIMARY KEY (name)
+    name VARCHAR(50) PRIMARY KEY
 );
 
-CREATE TABLE BladeCombo
+CREATE TABLE X_BladeCombo
 (
-    id     INT,
-    name   VARCHAR(50) NOT NULL,
-    name_1 VARCHAR(50) NOT NULL,
-    name_2 VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (name) REFERENCES Element (name),
-    FOREIGN KEY (name_1) REFERENCES Element (name),
-    FOREIGN KEY (name_2) REFERENCES Element (name)
+    stage1 VARCHAR(50) NOT NULL,
+    stage2 VARCHAR(50) NOT NULL,
+    stage3 VARCHAR(50) NOT NULL,
+    FOREIGN KEY (stage1) REFERENCES X_Element (name),
+    FOREIGN KEY (stage2) REFERENCES X_Element (name),
+    FOREIGN KEY (stage3) REFERENCES X_Element (name),
+    CONSTRAINT pk_blade_combo PRIMARY KEY (stage1, stage2, stage3)
 );
 
-CREATE TABLE UserDriver
+
+CREATE TABLE X_Blade
 (
-    id   INT AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (name) REFERENCES Driver (name)
+    name        VARCHAR(50) PRIMARY KEY,
+    element     VARCHAR(50) NOT NULL,
+    weaponClass VARCHAR(50) NOT NULL,
+    FOREIGN KEY (element) REFERENCES X_Element (name),
+    FOREIGN KEY (weaponClass) REFERENCES X_Weapon (name)
 );
 
-CREATE TABLE SavedUser
+CREATE TABLE X_DriverCombo
 (
-    login VARCHAR(50),
-    PRIMARY KEY (login)
+    driver      VARCHAR(50),
+    reaction    VARCHAR(50),
+    weaponClass VARCHAR(50),
+    FOREIGN KEY (driver) REFERENCES X_Driver (name),
+    FOREIGN KEY (reaction) REFERENCES X_Reaction (name),
+    FOREIGN KEY (weaponClass) REFERENCES X_Weapon (name),
+    CONSTRAINT pk_driver_combo PRIMARY KEY (driver, reaction, weaponClass)
 );
 
-CREATE TABLE Blade
+CREATE TABLE X_UserTeam
 (
-    name   VARCHAR(50),
-    name_1 VARCHAR(50) NOT NULL,
-    name_2 VARCHAR(50) NOT NULL,
-    PRIMARY KEY (name),
-    FOREIGN KEY (name_1) REFERENCES Element (name),
-    FOREIGN KEY (name_2) REFERENCES Weapon (name)
+    idTeam  INT AUTO_INCREMENT PRIMARY KEY,
+    label   VARCHAR(50),
+    login   VARCHAR(50) NOT NULL,
+    driver1 INT         NOT NULL,
+    driver2 INT,
+    driver3 INT,
+    FOREIGN KEY (login) REFERENCES X_SavedUser (login),
+    FOREIGN KEY (driver1, driver2, driver3) REFERENCES X_UserDriver (id),
 );
 
-CREATE TABLE UserTeam
+CREATE TABLE X_UserBlade
 (
-    idTeam INT AUTO_INCREMENT,
-    label  VARCHAR(50),
-    login  VARCHAR(50) NOT NULL,
-    PRIMARY KEY (idTeam),
-    FOREIGN KEY (login) REFERENCES SavedUser (login)
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    loginUser    VARCHAR(50),
+    bondedDriver INT         NOT NULL,
+    bladeName    VARCHAR(50) NOT NULL,
+    FOREIGN KEY (loginUser) REFERENCES X_SavedUser (login),
+    FOREIGN KEY (bondedDriver) REFERENCES X_UserDriver (id),
+    FOREIGN KEY (bladeName) REFERENCES X_Blade (name)
 );
 
-CREATE TABLE UserBlade
+CREATE TABLE X_UserDriver
 (
-    id   INT AUTO_INCREMENT,
-    id_1 INT         NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (id_1) REFERENCES UserDriver (id),
-    FOREIGN KEY (name) REFERENCES Blade (name)
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    driverName VARCHAR(50) NOT NULL,
+    blade1     INT         NOT NULL,
+    blade2     INT,
+    blade3     INT,
+    FOREIGN KEY (driverName) REFERENCES X_Driver (name),
+    FOREIGN KEY (blade1, blade2, blade3) REFERENCES X_UserBlade (id)
 );
 
-CREATE TABLE DriverCombo
+CREATE TABLE X_SavedUser
 (
-    name   VARCHAR(50),
-    name_1 VARCHAR(50),
-    name_2 VARCHAR(50),
-    PRIMARY KEY (name, name_1, name_2),
-    FOREIGN KEY (name) REFERENCES Driver (name),
-    FOREIGN KEY (name_1) REFERENCES Reaction (name),
-    FOREIGN KEY (name_2) REFERENCES Weapon (name)
-);
-
-CREATE TABLE Contains
-(
-    idTeam INT,
-    id     INT,
-    PRIMARY KEY (idTeam, id),
-    FOREIGN KEY (idTeam) REFERENCES UserTeam (idTeam),
-    FOREIGN KEY (id) REFERENCES UserDriver (id)
+    login VARCHAR(50) PRIMARY KEY
 );
