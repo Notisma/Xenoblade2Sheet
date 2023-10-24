@@ -5,7 +5,7 @@ namespace XC2S\Controllers;
 use XC2S\Model\DataObject\DriverCombination;
 use XC2S\Model\DataObject\DriverCombiObjs\Driver;
 use XC2S\Model\DataObject\DriverCombiObjs\Reaction;
-use XC2S\Model\DataObject\DriverCombiObjs\WeaponClass;
+use XC2S\Model\DataObject\DriverCombiObjs\Weapon;
 
 class ControllerDriverCombo extends ControllerMain
 {
@@ -13,7 +13,7 @@ class ControllerDriverCombo extends ControllerMain
     {
         DriverCombination::fillDatabase();
 
-        foreach (["Driver", "WeaponClass", "Reaction"] as $currentCategory) {
+        foreach (["Driver", "Weapon", "Reaction"] as $currentCategory) {
             ${"html" . $currentCategory} = '<label for="' . lcfirst($currentCategory) . '">' . " $currentCategory : </label>";
 
             ${"html" . $currentCategory} .= '<select name="' . lcfirst($currentCategory) . '">';
@@ -48,7 +48,7 @@ class ControllerDriverCombo extends ControllerMain
         if (!isset($_POST['driver']) || !isset($_POST['weaponClass']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-        $testCombi = new DriverCombination(Driver::fromName($_POST['driver']), WeaponClass::fromName($_POST['weaponClass']), Reaction::fromName($_POST['reaction']), false);
+        $testCombi = new DriverCombination(Driver::fromName($_POST['driver']), Weapon::fromName($_POST['weaponClass']), Reaction::fromName($_POST['reaction']), false);
         $combis = $testCombi->testCompatibility();
 
         self::displayView("viewList.php", ['combinations' => $combis]);

@@ -2,7 +2,7 @@
 
 namespace XC2S\Model\DataObject\DriverCombiObjs;
 
-enum WeaponClass: string
+enum Weapon: string
 {
     case EMPTY = '----------';
     case GREATAXE = 'Greataxe';
@@ -23,7 +23,7 @@ enum WeaponClass: string
     case MECH_ARMS = 'Mech Arms';
     case VARIABLE_SABER = 'Variable Saber';
 
-    public static function fromName(string $name): WeaponClass
+    public static function fromName(string $name): Weapon
     {
         foreach (self::cases() as $case)
             if ($name === $case->name)
