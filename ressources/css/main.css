@@ -1,0 +1,17 @@
+body {
+    background-color: #202123;
+}
+
+h1, h2, h3, p, label {
+    color: #D0CCC6;
+}
+
+nav {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: row;
+}
+
+nav div {
+    margin: 0 10%;
+}
