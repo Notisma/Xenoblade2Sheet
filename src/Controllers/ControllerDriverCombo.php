@@ -2,10 +2,10 @@
 
 namespace XC2S\Controllers;
 
+use XC2S\Model\DataObject\Driver;
 use XC2S\Model\DataObject\DriverCombination;
-use XC2S\Model\DataObject\DriverCombiObjs\Driver;
-use XC2S\Model\DataObject\DriverCombiObjs\Reaction;
-use XC2S\Model\DataObject\DriverCombiObjs\Weapon;
+use XC2S\Model\DataObject\Reaction;
+use XC2S\Model\DataObject\Weapon;
 
 class ControllerDriverCombo extends ControllerMain
 {

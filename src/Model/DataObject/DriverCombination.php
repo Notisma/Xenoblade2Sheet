@@ -2,10 +2,6 @@
 
 namespace XC2S\Model\DataObject;
 
-use XC2S\Model\DataObject\DriverCombiObjs\Driver;
-use XC2S\Model\DataObject\DriverCombiObjs\Reaction;
-use XC2S\Model\DataObject\DriverCombiObjs\Weapon;
-
 class DriverCombination
 {
     public Driver $driver;

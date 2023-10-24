@@ -1,6 +1,6 @@
 <?php
 
-namespace XC2S\Model\DataObject\DriverCombiObjs;
+namespace XC2S\Model\DataObject;
 
 enum Weapon: string
 {
