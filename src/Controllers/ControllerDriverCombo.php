@@ -2,23 +2,20 @@
 
 namespace XC2S\Controllers;
 
-use XC2S\Model\DataObject\Driver;
-use XC2S\Model\DataObject\DriverCombination;
-use XC2S\Model\DataObject\Reaction;
-use XC2S\Model\DataObject\Weapon;
+use XC2S\Model\Driver;
+use XC2S\Model\Reaction;
+use XC2S\Model\Weapon;
 
 class ControllerDriverCombo extends ControllerMain
 {
     public static function displayDriverCombo(): void
     {
-        DriverCombination::fillDatabase();
-
         foreach (["Driver", "Weapon", "Reaction"] as $currentCategory) {
             ${"html" . $currentCategory} = '<label for="' . lcfirst($currentCategory) . '">' . " $currentCategory : </label>";
 
             ${"html" . $currentCategory} .= '<select name="' . lcfirst($currentCategory) . '">';
 
-            $classPlace = "XC2S\Model\DataObject\DriverCombiObjs\\$currentCategory";
+            $classPlace = "XC2S\Model\DataObject\\$currentCategory";
 
             foreach ($classPlace::cases() as $enumValue) {
                 ${"html" . $currentCategory} .= '<option value="' . $enumValue->name . '"';
