@@ -2,6 +2,8 @@
 
 namespace XC2S\Model;
 
+use XC2S\Configuration\DatabaseConnection;
+
 class DriverCombo extends AbstractModel
 {
     public string $driver;
@@ -24,12 +26,26 @@ class DriverCombo extends AbstractModel
         ];
     }
 
-    protected function getNomTable(): string
+    public static function getAvalaibleCombos(string $driver, string $reaction, string $weaponClass)
+    {
+        foreach (['driver', 'reaction', 'weaponClass'] as $parameter) {
+            $$parameter = ($$parameter != "__empty") ? " AND $parameter = :${$parameter}Tag" : "";
+        }
+        $sql = "SELECT * FROM X_DriverCombo WHERE 1" . $driver . $reaction . $weaponClass . ";";
+        $prep = DatabaseConnection::getPdo()->prepare($sql);
+        $prep->execute([
+            'driverTag' => $driver
+        ]);
+        foreach ($prep as $tuple)
+            print_r($tuple);
+    }
+
+    protected function getTableName(): string
     {
         return 'X_DriverCombo';
     }
 
-    protected function getClePrimaire(): string
+    protected function getPrimaryKey(): string
     {
         return 'oeuf';
     }

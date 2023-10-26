@@ -6,8 +6,8 @@ use XC2S\Configuration\DatabaseConnection;
 
 abstract class AbstractModel
 {
-    protected abstract function getNomTable(): string;
-    protected abstract function getClePrimaire(): string;
+    protected abstract function getTableName(): string;
+    protected abstract function getPrimaryKey(): string;
     /*
     public abstract function formatTableau(): array;
     protected abstract function getNomsColonnes(): array;
@@ -27,11 +27,11 @@ abstract class AbstractModel
 
     public function getListId(): array
     {
-        $sql = 'SELECT * FROM ' . $this->getNomTable();
+        $sql = 'SELECT * FROM ' . $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query($sql);
         $listObject = array();
         foreach ($pdoStatement as $item)
-            $listObject[] = $item[$this->getClePrimaire()];
+            $listObject[] = $item[$this->getPrimaryKey()];
         return $listObject;
     }
 /*

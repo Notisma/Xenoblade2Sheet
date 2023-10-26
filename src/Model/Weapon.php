@@ -18,12 +18,12 @@ class Weapon extends AbstractModel
         ];
     }
 
-    protected function getNomTable(): string
+    protected function getTableName(): string
     {
         return 'X_Weapon';
     }
 
-    protected function getClePrimaire(): string
+    protected function getPrimaryKey(): string
     {
         return 'name';
     }

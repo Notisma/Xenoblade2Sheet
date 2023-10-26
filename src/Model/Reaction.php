@@ -18,12 +18,12 @@ class Reaction extends AbstractModel
         ];
     }
 
-    protected function getNomTable(): string
+    protected function getTableName(): string
     {
         return 'X_Reaction';
     }
 
-    protected function getClePrimaire(): string
+    protected function getPrimaryKey(): string
     {
         return 'name';
     }

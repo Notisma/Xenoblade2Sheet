@@ -3,6 +3,7 @@
 namespace XC2S\Controllers;
 
 use XC2S\Model\Driver;
+use XC2S\Model\DriverCombo;
 use XC2S\Model\Reaction;
 use XC2S\Model\Weapon;
 
@@ -15,8 +16,9 @@ class ControllerDriverCombo extends ControllerMain
 
             ${"html" . $currentCategory} .= '<select name="' . lcfirst($currentCategory) . '">';
 
-            $classPlace = "XC2S\Model\\$currentCategory";
+            ${"html" . $currentCategory} .= '<option value="__empty">-----</option>';
 
+            $classPlace = "XC2S\Model\\$currentCategory";
             foreach ((new $classPlace('__temp'))->getListId() as $listValue) {
                 ${"html" . $currentCategory} .= '<option value="' . $listValue . '"';
 
@@ -42,10 +44,7 @@ class ControllerDriverCombo extends ControllerMain
         if (!isset($_POST['driver']) || !isset($_POST['weapon']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-
-        //$testCombi = new DriverCombination(Driver::fromName($_POST['driver']), Weapon::fromName($_POST['weaponClass']), Reaction::fromName($_POST['reaction']), false);
-        //$combis = $testCombi->testCompatibility();
-        echo "helo";
+        DriverCombo::getAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction']);
         //self::displayView("viewList.php", ['combinations' => $combis]);
     }
 }
