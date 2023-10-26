@@ -1,13 +1,15 @@
 USE izoretr;
 
-DROP TABLE IF EXISTS X_SavedUser;
 DROP TABLE IF EXISTS X_UserTeam;
 DROP TABLE IF EXISTS X_DriverCombo;
-DROP TABLE IF EXISTS X_Driver;
 DROP TABLE IF EXISTS X_Reaction;
 DROP TABLE IF EXISTS X_BladeCombo;
-DROP TABLE IF EXISTS X_UserBlade;
+ALTER TABLE X_UserBlade
+    DROP CONSTRAINT fk_ublade_udriver;
 DROP TABLE IF EXISTS X_UserDriver;
+DROP TABLE IF EXISTS X_UserBlade;
+DROP TABLE IF EXISTS X_SavedUser;
+DROP TABLE IF EXISTS X_Driver;
 DROP TABLE IF EXISTS X_Blade;
 DROP TABLE IF EXISTS X_Element;
 DROP TABLE IF EXISTS X_Weapon;
@@ -89,7 +91,8 @@ CREATE TABLE X_UserDriver
     CONSTRAINT fk_udriver_ublade2 FOREIGN KEY (blade2) REFERENCES X_UserBlade (id),
     CONSTRAINT fk_udriver_ublade3 FOREIGN KEY (blade3) REFERENCES X_UserBlade (id)
 );
-ALTER TABLE X_UserBlade ADD CONSTRAINT fk_ublade_udriver FOREIGN KEY (bondedDriver) REFERENCES X_UserDriver (id);
+ALTER TABLE X_UserBlade
+    ADD CONSTRAINT fk_ublade_udriver FOREIGN KEY (bondedDriver) REFERENCES X_UserDriver (id);
 
 CREATE TABLE X_UserTeam
 (
@@ -105,3 +108,66 @@ CREATE TABLE X_UserTeam
     CONSTRAINT fk_team_driver3 FOREIGN KEY (driver3) REFERENCES X_UserDriver (id)
 );
 
+INSERT INTO X_Driver (name)
+VALUES ('Rex'),
+       ('Nia'),
+       ('Tora'),
+       ('Mòrag'),
+       ('Zeke');
+INSERT INTO X_Reaction (name)
+VALUES ('Break'),
+       ('Topple'),
+       ('Launch'),
+       ('Smash');
+INSERT INTO X_Weapon (name)
+VALUES ('Greataxe'),
+       ('Megalance'),
+       ('Ether Cannon'),
+       ('Shield Hammer'),
+       ('Chroma Katana'),
+       ('Bitball'),
+       ('Knuckle Claws'),
+       ('Aegis Sword'),
+       ('Catalyst Scimitar'),
+       ('Twin Rings'),
+       ('Whipswords'),
+       ('Big Bang Edge'),
+       ('Dual Scythes'),
+       ('Drill Shield'),
+       ('Mech Arms'),
+       ('Variable Saber');
+INSERT INTO X_Element (name)
+VALUES ('Fire'),
+       ('Water'),
+       ('Wind'),
+       ('Ice'),
+       ('Earth'),
+       ('Electric'),
+       ('Dark'),
+       ('Light');
+INSERT INTO X_BladeCombo (stage1, stage2, stage3)
+VALUES ('Fire', 'Fire', 'Fire'),
+       ('Fire', 'Fire', 'Light'),
+       ('Fire', 'Water', 'Fire'),
+       ('Fire', 'Water', 'Ice'),
+       ('Ice', 'Water', 'Wind'),
+       ('Ice', 'Ice', 'Earth'),
+       ('Ice', 'Ice', 'Darkness'),
+       ('Earth', 'Fire', 'Wind'),
+       ('Earth', 'Fire', 'Earth'),
+       ('Earth', 'Earth', 'Lightning'),
+       ('Wind', 'Wind', 'Earth'),
+       ('Wind', 'Wind', 'Lightning'),
+       ('Wind', 'Ice', 'Ice'),
+       ('Water', 'Water', 'Water'),
+       ('Water', 'Water', 'Darkness'),
+       ('Water', 'Earth', 'Wind'),
+       ('Lightning', 'Fire', 'Wind'),
+       ('Lightning', 'Fire', 'Ice'),
+       ('Lightning', 'Lightning', 'Water'),
+       ('Light', 'Lightning', 'Fire'),
+       ('Light', 'Light', 'Water'),
+       ('Light', 'Light', 'Light'),
+       ('Darkness', 'Light', 'Lightning'),
+       ('Darkness', 'Darkness', 'Darkness'),
+       ('Darkness', 'Darkness', 'Earth');
