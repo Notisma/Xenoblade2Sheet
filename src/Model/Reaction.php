@@ -17,4 +17,14 @@ class Reaction extends AbstractModel
             'name' => $this->name
         ];
     }
+
+    protected function getNomTable(): string
+    {
+        return 'X_Reaction';
+    }
+
+    protected function getClePrimaire(): string
+    {
+        return 'name';
+    }
 }

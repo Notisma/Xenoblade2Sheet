@@ -23,4 +23,14 @@ class DriverCombo extends AbstractModel
             'weaponClass' => $this->weaponClass
         ];
     }
+
+    protected function getNomTable(): string
+    {
+        return 'X_DriverCombo';
+    }
+
+    protected function getClePrimaire(): string
+    {
+        return 'oeuf';
+    }
 }

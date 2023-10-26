@@ -17,4 +17,14 @@ class Weapon extends AbstractModel
             'name' => $this->name
         ];
     }
+
+    protected function getNomTable(): string
+    {
+        return 'X_Weapon';
+    }
+
+    protected function getClePrimaire(): string
+    {
+        return 'name';
+    }
 }

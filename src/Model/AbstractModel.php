@@ -6,54 +6,51 @@ use XC2S\Configuration\DatabaseConnection;
 
 abstract class AbstractModel
 {
+    protected abstract function getNomTable(): string;
+    protected abstract function getClePrimaire(): string;
     /*
     public abstract function formatTableau(): array;
-
-    protected abstract function getNomTable(): string;
-
     protected abstract function getNomsColonnes(): array;
-
-    protected abstract function getClePrimaire(): string;
 
     public abstract function construireDepuisTableau(array $DataObjectTableau): AbstractModel;
 
 
-    public function getListeObjet(): ?array
+    public function getListeObject(): ?array
     {
         $sql = 'SELECT * FROM ' . $this->getNomTable();
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        $pdoStatement = DatabaseConnection::getPdo()->query($sql);
         foreach ($pdoStatement as $item) {
-            $listeObjet[] = $this->construireDepuisTableau($item);
+            $listObject[] = $this->construireDepuisTableau($item);
         }
-        return $listeObjet;
-    }
+        return $listObject;
+    }*/
 
-    public function getListeID()
+    public function getListId(): array
     {
         $sql = 'SELECT * FROM ' . $this->getNomTable();
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
-        foreach ($pdoStatement as $item) {
-            $listeObjet[] = $item[$this->getClePrimaire()];
-        }
-        return $listeObjet;
+        $pdoStatement = DatabaseConnection::getPdo()->query($sql);
+        $listObject = array();
+        foreach ($pdoStatement as $item)
+            $listObject[] = $item[$this->getClePrimaire()];
+        return $listObject;
     }
-
+/*
     public function getObjectParClePrimaire($clePrimaire): ?AbstractModel
     {
         $sql = "SELECT * FROM " . $this->getNomTable() . " WHERE " . $this->getClePrimaire() . "=:Tag ";
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $values = array("Tag" => $clePrimaire);
         $pdoStatement->execute($values);
-        $objet = $pdoStatement->fetch();
-        if (!$objet) {
+        $object = $pdoStatement->fetch();
+        if (!$object) {
             return null;
         }
-        return $this->construireDepuisTableau($objet);
+        return $this->construireDepuisTableau($object);
     }
 
     // ----- CRUD -----
 
-    public function createObject(AbstractModel $objet): void
+    public function createObject(AbstractModel $object): void
     {
         $sql = "INSERT INTO " . $this->getNomTable() . " VALUES (";
         foreach ($this->getNomsColonnes() as $nomColonne) {
@@ -61,32 +58,32 @@ abstract class AbstractModel
                 $sql .= ",";
             }
             $sql .= ":" . $nomColonne . "Tag";
-            $values[$nomColonne . "Tag"] = $objet->formatTableau()[$nomColonne];
+            $values[$nomColonne . "Tag"] = $object->formatTableau()[$nomColonne];
         }
         $sql .= ")";
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $pdoStatement->execute($values);
     }
 
-    public function changeObject(AbstractModel $objet): void
+    public function changeObject(AbstractModel $object): void
     {
         $sql = "UPDATE " . $this->getNomTable() . " SET ";
         foreach ($this->getNomsColonnes() as $nomColonne) {
             if ($nomColonne != $this->getNomsColonnes()[0])
                 $sql .= ",";
             $sql .= "$nomColonne = :$nomColonne" . "Tag";
-            $values[$nomColonne . "Tag"] = $objet->formatTableau()[$nomColonne];
+            $values[$nomColonne . "Tag"] = $object->formatTableau()[$nomColonne];
         }
         $clePrim = $this->getClePrimaire();
         $sql .= " WHERE $clePrim = :$clePrim" . "Tag;";
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $pdoStatement->execute($values);
     }
 
     public function deleteObject($clePrimaire): void
     {
         $sql = "DELETE FROM " . $this->getNomTable() . " WHERE " . $this->getClePrimaire() . "=:Tag ";
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $values = array("Tag" => $clePrimaire);
         $pdoStatement->execute($values);
     }

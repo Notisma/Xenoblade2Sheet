@@ -15,15 +15,15 @@ class ControllerDriverCombo extends ControllerMain
 
             ${"html" . $currentCategory} .= '<select name="' . lcfirst($currentCategory) . '">';
 
-            $classPlace = "XC2S\Model\DataObject\\$currentCategory";
+            $classPlace = "XC2S\Model\\$currentCategory";
 
-            foreach ($classPlace::cases() as $enumValue) {
-                ${"html" . $currentCategory} .= '<option value="' . $enumValue->name . '"';
+            foreach ((new $classPlace('__temp'))->getListId() as $listValue) {
+                ${"html" . $currentCategory} .= '<option value="' . $listValue . '"';
 
-                if (isset($_POST[lcfirst($currentCategory)]) && $enumValue->name === $_POST[lcfirst($currentCategory)])
+                if (isset($_POST[lcfirst($currentCategory)]) && $listValue === $_POST[lcfirst($currentCategory)])
                     ${"html" . $currentCategory} .= ' selected';
 
-                ${"html" . $currentCategory} .= '>' . $enumValue->value . '</option>';
+                ${"html" . $currentCategory} .= '>' . $listValue . '</option>';
             }
 
             ${"html" . $currentCategory} .= '</select>';
@@ -32,22 +32,20 @@ class ControllerDriverCombo extends ControllerMain
 
         self::displayViewInBody("Driver Combo", "viewDriverCombo.php", [
             'htmlDriver' => $htmlDriver,
-            'htmlWeaponClass' => $htmlWeaponClass,
+            'htmlWeaponClass' => $htmlWeapon,
             'htmlReaction' => $htmlReaction
         ]);
-
-
-//        session_start();
     }
 
     public static function displayList(): void
     {
-        if (!isset($_POST['driver']) || !isset($_POST['weaponClass']) || !isset($_POST['reaction']))
+        if (!isset($_POST['driver']) || !isset($_POST['weapon']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-        $testCombi = new DriverCombination(Driver::fromName($_POST['driver']), Weapon::fromName($_POST['weaponClass']), Reaction::fromName($_POST['reaction']), false);
-        $combis = $testCombi->testCompatibility();
 
-        self::displayView("viewList.php", ['combinations' => $combis]);
+        //$testCombi = new DriverCombination(Driver::fromName($_POST['driver']), Weapon::fromName($_POST['weaponClass']), Reaction::fromName($_POST['reaction']), false);
+        //$combis = $testCombi->testCompatibility();
+        echo "helo";
+        //self::displayView("viewList.php", ['combinations' => $combis]);
     }
 }

@@ -17,4 +17,14 @@ class Driver extends AbstractModel
             'name' => $this->name
         ];
     }
+
+    protected function getNomTable(): string
+    {
+        return 'X_Driver';
+    }
+
+    protected function getClePrimaire(): string
+    {
+        return 'name';
+    }
 }
