@@ -17,4 +17,9 @@ class Reaction extends AbstractDataObject
             'name' => $this->name
         ];
     }
+
+    public function getPrimKeyValue(): string
+    {
+        return $this->name;
+    }
 }

@@ -17,4 +17,9 @@ class SavedUser extends AbstractDataObject
             'login' => $this->login
         ];
     }
+
+    public function getPrimKeyValue(): string
+    {
+        return $this->login;
+    }
 }

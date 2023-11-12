@@ -2,9 +2,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
 SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS `X_Blade`, `X_BladeCombo`, `X_Driver`, `X_DriverCombo`, `X_Element`, `X_Reaction`, `X_SavedUser`, `X_UserBlade`, `X_UserDriver`, `X_UserTeam`, `X_Weapon`;
 SET foreign_key_checks = 1;
+
 
 CREATE TABLE `X_Blade`
 (
@@ -14,6 +16,10 @@ CREATE TABLE `X_Blade`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
+INSERT INTO `X_Blade` (name, element, weaponClass)
+VALUES ('Pyra', 'Fire', 'Aegis Sword'),
+       ('Corvin', 'Light', 'Chroma Katana'),
+       ('Fiora', 'Wind', 'Twin Rings');
 
 CREATE TABLE `X_BladeCombo`
 (
@@ -23,7 +29,6 @@ CREATE TABLE `X_BladeCombo`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_BladeCombo` (`stage1`, `stage2`, `stage3`)
 VALUES ('Dark', 'Dark', 'Dark'),
        ('Dark', 'Dark', 'Earth'),
@@ -57,7 +62,6 @@ CREATE TABLE `X_Driver`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_Driver` (`name`)
 VALUES ('Mòrag'),
        ('Nia'),
@@ -73,7 +77,6 @@ CREATE TABLE `X_DriverCombo`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_DriverCombo` (`driver`, `reaction`, `weaponClass`)
 VALUES ('Mòrag', 'Break', 'Ether Cannon'),
        ('Mòrag', 'Break', 'Knuckle Claws'),
@@ -103,14 +106,12 @@ VALUES ('Mòrag', 'Break', 'Ether Cannon'),
        ('Zeke', 'Topple', 'Greataxe'),
        ('Zeke', 'Topple', 'Knuckle Claws');
 
-
 CREATE TABLE `X_Element`
 (
     `name` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_Element` (`name`)
 VALUES ('Dark'),
        ('Earth'),
@@ -121,20 +122,17 @@ VALUES ('Dark'),
        ('Water'),
        ('Wind');
 
-
 CREATE TABLE `X_Reaction`
 (
     `name` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_Reaction` (`name`)
 VALUES ('Break'),
+       ('Topple'),
        ('Launch'),
-       ('Smash'),
-       ('Topple');
-
+       ('Smash');
 
 CREATE TABLE `X_SavedUser`
 (
@@ -142,7 +140,6 @@ CREATE TABLE `X_SavedUser`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 
 CREATE TABLE `X_UserBlade`
 (
@@ -154,7 +151,6 @@ CREATE TABLE `X_UserBlade`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
-
 CREATE TABLE `X_UserDriver`
 (
     `id`         int(11)                      NOT NULL,
@@ -165,7 +161,6 @@ CREATE TABLE `X_UserDriver`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 
 CREATE TABLE `X_UserTeam`
 (
@@ -179,14 +174,12 @@ CREATE TABLE `X_UserTeam`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
-
 CREATE TABLE `X_Weapon`
 (
     `name` varchar(50) COLLATE utf8_bin NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
-
 INSERT INTO `X_Weapon` (`name`)
 VALUES ('Aegis Sword'),
        ('Big Bang Edge'),

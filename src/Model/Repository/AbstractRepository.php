@@ -16,9 +16,8 @@ abstract class AbstractRepository
     public abstract function constructFromArray(array $dataObjectArray): AbstractDataObject;
 
 
-    protected function dataObjectsFromQuery(string $sql): array
+    protected function dataObjectsFromStatement(\PDOStatement $pdoStatement): array
     {
-        $pdoStatement = DatabaseConnection::getPdo()->query($sql);
         $listObject = array();
         foreach ($pdoStatement as $item) {
             $listObject[] = $this->constructFromArray($item);
@@ -29,7 +28,8 @@ abstract class AbstractRepository
     public function getDataObjectList(): ?array
     {
         $sql = 'SELECT * FROM ' . $this->getTableName();
-        return $this->dataObjectsFromQuery($sql);
+        $pdo = DatabaseConnection::getPdo()->query($sql);
+        return $this->dataObjectsFromStatement($pdo);
     }
 
     public function getIdList(): array
@@ -76,20 +76,23 @@ abstract class AbstractRepository
         $pdoStatement->execute($tags);
     }
 
-    public function changeObject(AbstractDataObject $object): void
+    public function updateObject(AbstractDataObject $object): void
     {
         $sql = "UPDATE " . $this->getTableName() . " SET ";
-        $values = array();
+        $tags = array();
         foreach ($this->getColumnNames() as $nomColonne) {
             if ($nomColonne != $this->getColumnNames()[0])
-                $sql .= ",";
+                $sql .= ", ";
             $sql .= "$nomColonne = :$nomColonne" . "Tag";
-            $values[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
+            $tags[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
         }
         $clePrim = $this->getPrimaryKeyName();
         $sql .= " WHERE $clePrim = :$clePrim" . "Tag;";
+
+        if (!isset($tags["{$clePrim}Tag"]))
+            $tags["{$clePrim}Tag"] = $object->getPrimKeyValue();
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
-        $pdoStatement->execute($values);
+        $pdoStatement->execute($tags);
     }
 
     public function deleteObject($primKeyValue): void

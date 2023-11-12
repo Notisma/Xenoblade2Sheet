@@ -2,6 +2,7 @@
 
 namespace XC2S\Model\Repository;
 
+use XC2S\Configuration\DatabaseConnection;
 use XC2S\Model\DataObject\Blade;
 
 class BladeRepo extends AbstractRepository
@@ -13,10 +14,12 @@ class BladeRepo extends AbstractRepository
                 WHERE name NOT IN (
                     SELECT bladeName
                     FROM X_UserBlade
-                    WHERE loginUser = '$login'
+                    WHERE loginUser = :loginTag
                 );
         ";
-        return $this->dataObjectsFromQuery($sql);
+        $pdo = DatabaseConnection::getPdo()->prepare($sql);
+        $pdo->execute(['loginTag' => $login]);
+        return $this->dataObjectsFromStatement($pdo);
     }
 
     public function bladeExists(string $bladeName): bool

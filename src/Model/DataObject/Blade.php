@@ -24,4 +24,9 @@ class Blade extends AbstractDataObject
             'weaponClass' => $this->weaponClass,
         ];
     }
+
+    public function getPrimKeyValue(): string
+    {
+        return $this->name;
+    }
 }

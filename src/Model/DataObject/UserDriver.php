@@ -29,4 +29,9 @@ class UserDriver extends AbstractDataObject
             'blade3' => $this->blade3,
         ];
     }
+
+    public function getPrimKeyValue(): int
+    {
+        return $this->id;
+    }
 }

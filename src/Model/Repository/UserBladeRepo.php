@@ -2,22 +2,43 @@
 
 namespace XC2S\Model\Repository;
 
+use XC2S\Configuration\DatabaseConnection;
 use XC2S\Model\DataObject\AbstractDataObject;
 use XC2S\Model\DataObject\UserBlade;
 
 class UserBladeRepo extends AbstractRepository
 {
-    public function getBladesOfUser(string $login): array
+    public function getBladesOfUserGrouped(string $login): array
     {
-        $userblades = self::getDataObjectList();
-        $correspondingUB = array();
-
-        foreach ($userblades as $b)
-            if ($b->loginUser === $login)
-                $correspondingUB[] = $b;
-
-        return $correspondingUB;
+        $group = array();
+        foreach ((new DriverRepo())->getIdList() as $driver)
+            $group[$driver] = $this->getBladesOfUserByDriver($login, $driver);
+        $group['Need to specify driver for :'] = $this->getBladesOfUserWithoutDriver($login);
+        return $group;
     }
+
+    public function getBladesOfUserByDriver(string $login, string $driverName): array
+    {
+        $sql = "SELECT *
+                FROM X_UserBlade
+                WHERE loginUser = :loginTag
+                    AND bondedDriver = :driverTag;";
+        $pdo = DatabaseConnection::getPdo()->prepare($sql);
+        $pdo->execute(['loginTag' => $login, 'driverTag' => $driverName]);
+        return $this->dataObjectsFromStatement($pdo);
+    }
+
+    public function getBladesOfUserWithoutDriver(string $login): array
+    {
+        $sql = "SELECT *
+                FROM X_UserBlade
+                WHERE loginUser = :loginTag
+                    AND bondedDriver IS NULL;";
+        $pdo = DatabaseConnection::getPdo()->prepare($sql);
+        $pdo->execute(['loginTag' => $login]);
+        return $this->dataObjectsFromStatement($pdo);
+    }
+
 
     public function userHasBlade(string $login, string $bladeName): bool
     {

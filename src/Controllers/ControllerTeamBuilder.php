@@ -23,9 +23,27 @@ class ControllerTeamBuilder extends ControllerMain
         $login = UserConnection::getLoginConnectedUser();
 
         self::displayViewInBody("Blade Manager", 'teamBuilder/viewUserBladeSelection.php', [
-            'userBlades' => (new UserBladeRepo())->getBladesOfUser($login),
+            'groupedUserBlades' => (new UserBladeRepo())->getBladesOfUserGrouped($login),
             'nonUserBlades' => (new BladeRepo())->getBladesThatUserDoesntHave($login),
         ]);
+    }
+
+    public static function displayBladeDetails(): void
+    {
+        if (self::userLoggedOut()) return;
+
+        if (!isset($_GET['ublade_id']))
+            self::displayError("Il faut renseigner une lame");
+        else {
+            $bladeid = $_GET['ublade_id'];
+            $blade = (new UserBladeRepo())->getObjectFromPrimaryKey($bladeid);
+            if (is_null($blade))
+                self::displayError("La lame n'existe pas");
+            else
+                self::displayViewInBody("Blade Details - $blade->bladeName", 'teamBuilder/viewBladeDetails.php', [
+                    'ublade' => $blade
+                ]);
+        }
     }
 
     //--------------PUBLIC FACTORY--------------
@@ -47,6 +65,26 @@ class ControllerTeamBuilder extends ControllerMain
             }
         }
     }
+
+    public static function changeBondedDriver(): void
+    {
+        if (self::userLoggedOut()) return;
+        $login = UserConnection::getLoginConnectedUser();
+
+        if (!isset($_GET['ublade_id'], $_POST['new_driver']))
+            self::displayError("Il faut renseigner une lame et son nouveau driver");
+        else {
+            $bladeUserDO = (new UserBladeRepo())->getObjectFromPrimaryKey($_GET['ublade_id']);
+            if (!isset($bladeUserDO))
+                self::displayError("Cette user lame n'existe pas");
+            else {
+                $bladeUserDO->bondedDriver = $_POST['new_driver'];
+                (new UserBladeRepo())->updateObject($bladeUserDO);
+                self::displayBladeManager();
+            }
+        }
+    }
+
 
     //--------------PRIVATE FACTORY-------------
     private static function userLoggedOut(): bool

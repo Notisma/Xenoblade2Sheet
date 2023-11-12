@@ -23,4 +23,9 @@ class DriverCombo extends AbstractDataObject
             'weaponClass' => $this->weaponClass
         ];
     }
+
+    public function getPrimKeyValue(): string
+    {
+        return "egg";
+    }
 }

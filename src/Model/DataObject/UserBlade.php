@@ -26,4 +26,9 @@ class UserBlade extends AbstractDataObject
             'bladeName' => $this->bladeName,
         ];
     }
+
+    public function getPrimKeyValue(): int
+    {
+        return $this->id;
+    }
 }
