@@ -37,10 +37,14 @@ class ControllerTeamBuilder extends ControllerMain
         if (!isset($_GET['blade']))
             self::displayError("Il faut renseigner une lame");
         else {
-            $ogBladeName = (new BladeRepo())->getObjectFromPrimaryKey($_GET['blade'])->name;
-            $newUBlade = new UserBlade(-1, $login, null, $ogBladeName);
-            (new UserBladeRepo())->createObject($newUBlade);
-            self::displayBladeManager();
+            $blade = $_GET['blade'];
+            if (!(new BladeRepo())->bladeExists($blade) || (new UserBladeRepo())->userHasBlade($login, $blade))
+                self::displayError("Cette lame n'existe pas, ou vous l'avez déjà");
+            else {
+                $newUBlade = new UserBlade(-1, $login, null, $blade);
+                (new UserBladeRepo())->createObject($newUBlade);
+                self::displayBladeManager();
+            }
         }
     }
 

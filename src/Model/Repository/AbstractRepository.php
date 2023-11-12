@@ -71,7 +71,7 @@ abstract class AbstractRepository
             $tags[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
         }
         $sql = "INSERT INTO " . $this->getTableName() . " ($fields) VALUES ($values);";
-        print_r($sql);
+
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $pdoStatement->execute($tags);
     }

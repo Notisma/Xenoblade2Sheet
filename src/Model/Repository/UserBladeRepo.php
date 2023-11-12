@@ -19,6 +19,17 @@ class UserBladeRepo extends AbstractRepository
         return $correspondingUB;
     }
 
+    public function userHasBlade(string $login, string $bladeName): bool
+    {
+        $userblades = self::getDataObjectList();
+
+        foreach ($userblades as $b)
+            if ($b->bladeName === $bladeName && $b->loginUser === $login)
+                return true;
+
+        return false;
+    }
+
 
     protected function getTableName(): string
     {

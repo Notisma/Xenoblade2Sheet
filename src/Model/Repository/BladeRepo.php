@@ -19,6 +19,17 @@ class BladeRepo extends AbstractRepository
         return $this->dataObjectsFromQuery($sql);
     }
 
+    public function bladeExists(string $bladeName): bool
+    {
+        $blades = self::getDataObjectList();
+
+        foreach ($blades as $b)
+            if ($b->name === $bladeName)
+                return true;
+
+        return false;
+    }
+
     protected function getTableName(): string
     {
         return "X_Blade";
