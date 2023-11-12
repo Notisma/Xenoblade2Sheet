@@ -22,7 +22,7 @@
         <div><a href="?controller=Main&action=displayIndex">Accueil</a></div>
         <div><a href="?controller=DriverCombo&action=displayDriverCombo">Driver Combos</a></div>
         <div><a href="?controller=BladeCombo&action=displayBladeCombo">Blade Combos</a></div>
-        <div><a href="?controller=TeamBuilder&action=displayTeamBuilding">Team Builder</a></div>
+        <div><a href="?controller=TeamBuilder&action=displayBuilderIndex">Team Builder</a></div>
     </nav>
 </header>
 

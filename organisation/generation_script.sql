@@ -4,8 +4,6 @@ DROP TABLE IF EXISTS X_UserTeam;
 DROP TABLE IF EXISTS X_DriverCombo;
 DROP TABLE IF EXISTS X_Reaction;
 DROP TABLE IF EXISTS X_BladeCombo;
-ALTER TABLE X_UserBlade
-    DROP CONSTRAINT fk_ublade_udriver;
 DROP TABLE IF EXISTS X_UserDriver;
 DROP TABLE IF EXISTS X_UserBlade;
 DROP TABLE IF EXISTS X_SavedUser;
@@ -74,10 +72,11 @@ CREATE TABLE X_UserBlade
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     loginUser    VARCHAR(50),
-    bondedDriver INT         NOT NULL,
+    bondedDriver VARCHAR(50),
     bladeName    VARCHAR(50) NOT NULL,
     CONSTRAINT fk_ublade_user FOREIGN KEY (loginUser) REFERENCES X_SavedUser (login),
-    CONSTRAINT fk_ublade_rblade FOREIGN KEY (bladeName) REFERENCES X_Blade (name)
+    CONSTRAINT fk_ublade_rblade FOREIGN KEY (bladeName) REFERENCES X_Blade (name),
+    CONSTRAINT fk_ublade_driver FOREIGN KEY (bondedDriver) REFERENCES X_Driver (name)
 );
 CREATE TABLE X_UserDriver
 (
@@ -91,8 +90,6 @@ CREATE TABLE X_UserDriver
     CONSTRAINT fk_udriver_ublade2 FOREIGN KEY (blade2) REFERENCES X_UserBlade (id),
     CONSTRAINT fk_udriver_ublade3 FOREIGN KEY (blade3) REFERENCES X_UserBlade (id)
 );
-ALTER TABLE X_UserBlade
-    ADD CONSTRAINT fk_ublade_udriver FOREIGN KEY (bondedDriver) REFERENCES X_UserDriver (id);
 
 CREATE TABLE X_UserTeam
 (

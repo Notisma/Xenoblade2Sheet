@@ -28,6 +28,6 @@ if (class_exists($nomClasseController)) {
     if (in_array($action, get_class_methods($nomClasseController))) {
         $nomClasseController::$action();
     } else
-        CGlobal::displayError("L'action :\" $action \" n'existe pas dans le controller :\" $nomClasseController \"");
+        CGlobal::displayError("L'action \"$action\" n'existe pas dans le contrôleur \"$nomClasseController\"");
 } else
-    CGlobal::displayError("Le contrôleur :\" $nomClasseController \" n'existe pas");
+    CGlobal::displayError("Le contrôleur \"$nomClasseController\" n'existe pas");

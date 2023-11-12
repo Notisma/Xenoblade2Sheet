@@ -37,7 +37,7 @@ class DriverComboRepo extends AbstractRepository
         return 'X_DriverCombo';
     }
 
-    protected function getPrimaryKey(): string
+    protected function getPrimaryKeyName(): string
     {
         return 'oeuf';
     }

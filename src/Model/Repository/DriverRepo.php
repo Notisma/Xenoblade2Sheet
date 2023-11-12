@@ -12,7 +12,7 @@ class DriverRepo extends AbstractRepository
         return 'X_Driver';
     }
 
-    protected function getPrimaryKey(): string
+    protected function getPrimaryKeyName(): string
     {
         return 'name';
     }

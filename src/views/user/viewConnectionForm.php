@@ -9,7 +9,7 @@
         <p>
             <input type="submit" value="Validate"/>
             <input type="hidden" name="controller" value="Connection"/>
-            <input type="hidden" name="action" value="logInOrSignIn"/>
+            <input type="hidden" name="action" value="logInOrSignUp"/>
         </p>
     </fieldset>
 </form>

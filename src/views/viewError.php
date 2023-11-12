@@ -1,6 +1,6 @@
-<h2>Error <?php
+<h2><?php
     if (isset($errorStr))
-        echo ": $errorStr.";
+        echo "$errorStr.";
     else
-        echo "unknown.";
+        echo "Error unknown.";
     ?></h2>

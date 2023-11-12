@@ -12,7 +12,7 @@ class SavedUserRepo extends AbstractRepository
         return "X_SavedUser";
     }
 
-    protected function getPrimaryKey(): string
+    protected function getPrimaryKeyName(): string
     {
         return "login";
     }

@@ -2,14 +2,14 @@
 
 namespace XC2S\Model\Repository;
 
-use XC2S\Model\DataObject\Reaction;
+use XC2S\Model\DataObject\Element;
 use XC2S\Model\DataObject\AbstractDataObject;
 
-class ReactionRepo extends AbstractRepository
+class ElementRepo extends AbstractRepository
 {
     protected function getTableName(): string
     {
-        return 'X_Reaction';
+        return 'X_Element';
     }
 
     protected function getPrimaryKeyName(): string
@@ -19,7 +19,7 @@ class ReactionRepo extends AbstractRepository
 
     public function constructFromArray(array $dataObjectArray): AbstractDataObject
     {
-        return new Reaction(
+        return new Element(
             $dataObjectArray['name'],
         );
     }

@@ -12,7 +12,7 @@ class WeaponRepo extends AbstractRepository
         return 'X_Weapon';
     }
 
-    protected function getPrimaryKey(): string
+    protected function getPrimaryKeyName(): string
     {
         return 'name';
     }

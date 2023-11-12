@@ -9,16 +9,15 @@ abstract class AbstractRepository
 {
     protected abstract function getTableName(): string;
 
-    protected abstract function getPrimaryKey(): string;
+    protected abstract function getPrimaryKeyName(): string;
 
     protected abstract function getColumnNames(): array;
 
     public abstract function constructFromArray(array $dataObjectArray): AbstractDataObject;
 
 
-    public function getDataObjectList(): ?array
+    protected function dataObjectsFromQuery(string $sql): array
     {
-        $sql = 'SELECT * FROM ' . $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query($sql);
         $listObject = array();
         foreach ($pdoStatement as $item) {
@@ -27,19 +26,25 @@ abstract class AbstractRepository
         return $listObject;
     }
 
+    public function getDataObjectList(): ?array
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName();
+        return $this->dataObjectsFromQuery($sql);
+    }
+
     public function getIdList(): array
     {
         $sql = 'SELECT * FROM ' . $this->getTableName();
         $pdoStatement = DatabaseConnection::getPdo()->query($sql);
         $listObject = array();
         foreach ($pdoStatement as $item)
-            $listObject[] = $item[$this->getPrimaryKey()];
+            $listObject[] = $item[$this->getPrimaryKeyName()];
         return $listObject;
     }
 
     public function getObjectFromPrimaryKey($primKeyValue): ?AbstractDataObject
     {
-        $sql = "SELECT * FROM " . $this->getTableName() . " WHERE " . $this->getPrimaryKey() . "=:Tag ";
+        $sql = "SELECT * FROM " . $this->getTableName() . " WHERE " . $this->getPrimaryKeyName() . "=:Tag ";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $values = array("Tag" => $primKeyValue);
         $pdoStatement->execute($values);
@@ -77,7 +82,7 @@ abstract class AbstractRepository
             $sql .= "$nomColonne = :$nomColonne" . "Tag";
             $values[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
         }
-        $clePrim = $this->getPrimaryKey();
+        $clePrim = $this->getPrimaryKeyName();
         $sql .= " WHERE $clePrim = :$clePrim" . "Tag;";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $pdoStatement->execute($values);
@@ -85,7 +90,7 @@ abstract class AbstractRepository
 
     public function deleteObject($primKeyValue): void
     {
-        $sql = "DELETE FROM " . $this->getTableName() . " WHERE " . $this->getPrimaryKey() . "=:Tag ";
+        $sql = "DELETE FROM " . $this->getTableName() . " WHERE " . $this->getPrimaryKeyName() . "=:Tag ";
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
         $values = array("Tag" => $primKeyValue);
         $pdoStatement->execute($values);

@@ -24,14 +24,14 @@ class ControllerConnection extends ControllerMain
 
 
     //---------------PUBLIC FACTORY-------------
-    public static function logInOrSignIn(): void
+    public static function logInOrSignUp(): void
     {
-        if (is_null($_GET['login']))
+        if (!isset($_GET['login']))
             self::displayError("Il faut renseigner un utilisateur.");
         else {
             $login = $_GET['login'];
             if ((new SavedUserRepo())->getObjectFromPrimaryKey($login) == null) {
-                self::signIn($login);
+                self::signUp($login);
             } else {
                 self::logIn($login);
             }
@@ -51,7 +51,7 @@ class ControllerConnection extends ControllerMain
         self::displayIndex();
     }
 
-    private static function signIn(string $login): void
+    private static function signUp(string $login): void
     {
         $userDO = new SavedUser($login);
         (new SavedUserRepo())->createObject($userDO);
