@@ -4,11 +4,20 @@ namespace XC2S\Configuration;
 
 class Configuration
 {
+    /*
     static private array $config = array(
         'hostname' => 'webinfo',
         'database' => 'izoretr',
         'port' => '3316',
         'login' => 'izoretr',
+        'password' => ''
+    );
+    */
+    static private array $config = array(
+        'hostname' => 'localhost',
+        'database' => 'XC2S',
+        'port' => '3306',
+        'login' => 'notisma',
         'password' => ''
     );
 

@@ -28,7 +28,7 @@ class DatabaseConnection
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    private static function getInstance()
+    private static function getInstance(): DatabaseConnection
     {
         if (is_null(self::$instance))
             self::$instance = new DatabaseConnection();

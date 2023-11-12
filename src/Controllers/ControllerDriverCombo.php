@@ -2,34 +2,30 @@
 
 namespace XC2S\Controllers;
 
-use XC2S\Model\Driver;
-use XC2S\Model\DriverCombo;
-use XC2S\Model\Reaction;
-use XC2S\Model\Weapon;
+use XC2S\Model\Repository\DriverComboRepo;
+use XC2S\Model\DataObject\DriverCombo;
 
 class ControllerDriverCombo extends ControllerMain
 {
     public static function displayDriverCombo(): void
     {
         foreach (["Driver", "Weapon", "Reaction"] as $currentCategory) {
-            ${"html" . $currentCategory} = '<label for="' . lcfirst($currentCategory) . '">' . " $currentCategory : </label>";
+            $code = "<label for='" . lcfirst($currentCategory) . "'>$currentCategory : </label>
+                <select name='" . lcfirst($currentCategory) . "'>
+                <option value='__empty'>-------</option>";
 
-            ${"html" . $currentCategory} .= '<select name="' . lcfirst($currentCategory) . '">';
-
-            ${"html" . $currentCategory} .= '<option value="__empty">-----</option>';
-
-            $classPlace = "XC2S\Model\\$currentCategory";
-            foreach ((new $classPlace('__temp'))->getListId() as $listValue) {
-                ${"html" . $currentCategory} .= '<option value="' . $listValue . '"';
+            $repositoryPlace = "XC2S\Model\Repository\\$currentCategory" . "Repo";
+            foreach ((new $repositoryPlace('__temp'))->getIdList() as $listValue) {
+                $code .= '<option value="' . $listValue . '"';
 
                 if (isset($_POST[lcfirst($currentCategory)]) && $listValue === $_POST[lcfirst($currentCategory)])
-                    ${"html" . $currentCategory} .= ' selected';
+                    $code .= ' selected';
 
-                ${"html" . $currentCategory} .= '>' . $listValue . '</option>';
+                $code .= '>' . $listValue . '</option>';
             }
+            $code .= '</select>';
 
-            ${"html" . $currentCategory} .= '</select>';
-
+            ${"html" . $currentCategory} = $code;
         }
 
         self::displayViewInBody("Driver Combo", "viewDriverCombo.php", [
@@ -44,7 +40,7 @@ class ControllerDriverCombo extends ControllerMain
         if (!isset($_POST['driver']) || !isset($_POST['weapon']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-        DriverCombo::getAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction']);
+        DriverComboRepo::printAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction']);
         //self::displayView("viewList.php", ['combinations' => $combis]);
     }
 }
