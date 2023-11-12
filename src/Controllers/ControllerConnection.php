@@ -30,6 +30,7 @@ class ControllerConnection extends ControllerMain
             self::displayError("Il faut renseigner un utilisateur.");
         else {
             $login = $_GET['login'];
+
             if ((new SavedUserRepo())->getObjectFromPrimaryKey($login) == null) {
                 self::signUp($login);
             } else {

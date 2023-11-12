@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" href="../ressources/images/website_icon.png"/>
 
     <link rel="stylesheet" href="../ressources/css/main.css"/>
+    <link rel="stylesheet" href="../ressources/css/<?= $secondaryCSSpath ?>">
+    <script src="../ressources/javascript/functions.js"></script>
 </head>
 <body>
 <header>

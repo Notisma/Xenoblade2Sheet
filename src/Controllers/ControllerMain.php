@@ -12,10 +12,13 @@ class ControllerMain
 
     protected static function displayViewInBody(string $pageTitle, string $viewPath, array $parameters = []): void
     {
+        $cssPath = str_replace('view', 'style', $viewPath);
+        $cssPath = str_replace('.php', '.css', $cssPath);
         self::displayView("viewGeneral.php", array_merge(
             [
                 'pageTitle' => $pageTitle,
-                'path' => $viewPath
+                'path' => $viewPath,
+                'secondaryCSSpath' => $cssPath
             ],
             $parameters
         ));
