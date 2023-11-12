@@ -58,18 +58,22 @@ abstract class AbstractRepository
 
     public function createObject(AbstractDataObject $object): void
     {
-        $sql = "INSERT INTO " . $this->getTableName() . " VALUES (";
-        $values = array();
+        $fields = "";
+        $values = "";
+        $tags = array();
         foreach ($this->getColumnNames() as $nomColonne) {
             if ($nomColonne != $this->getColumnNames()[0]) {
-                $sql .= ",";
+                $fields .= ", ";
+                $values .= ", ";
             }
-            $sql .= ":" . $nomColonne . "Tag";
-            $values[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
+            $fields .= $nomColonne;
+            $values .= ":" . $nomColonne . "Tag";
+            $tags[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
         }
-        $sql .= ")";
+        $sql = "INSERT INTO " . $this->getTableName() . " ($fields) VALUES ($values);";
+        print_r($sql);
         $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
-        $pdoStatement->execute($values);
+        $pdoStatement->execute($tags);
     }
 
     public function changeObject(AbstractDataObject $object): void
