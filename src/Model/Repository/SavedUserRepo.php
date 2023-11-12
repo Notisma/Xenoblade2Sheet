@@ -3,31 +3,31 @@
 namespace XC2S\Model\Repository;
 
 use XC2S\Model\DataObject\AbstractDataObject;
-use XC2S\Model\DataObject\Driver;
+use XC2S\Model\DataObject\SavedUser;
 
-class DriverRepo extends AbstractRepository
+class SavedUserRepo extends AbstractRepository
 {
     protected function getTableName(): string
     {
-        return 'X_Driver';
+        return "X_SavedUser";
     }
 
     protected function getPrimaryKey(): string
     {
-        return 'name';
+        return "login";
     }
 
     protected function getColumnNames(): array
     {
         return [
-            'name',
+            'login',
         ];
     }
 
     public function constructFromArray(array $dataObjectArray): AbstractDataObject
     {
-        return new Driver(
-            $dataObjectArray['name'],
+        return new SavedUser(
+            $dataObjectArray['login'],
         );
     }
 }

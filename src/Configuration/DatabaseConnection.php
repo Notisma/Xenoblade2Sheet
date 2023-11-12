@@ -16,11 +16,11 @@ class DatabaseConnection
 
     public function __construct()
     {
-        $hostname = Configuration::getHostName();
-        $port = Configuration::getPort();
-        $databaseName = Configuration::getDataBase();
-        $login = Configuration::getLogin();
-        $password = Configuration::getPassWord();
+        $hostname = DatabaseConfiguration::getHostName();
+        $port = DatabaseConfiguration::getPort();
+        $databaseName = DatabaseConfiguration::getDataBase();
+        $login = DatabaseConfiguration::getLogin();
+        $password = DatabaseConfiguration::getPassWord();
 
         $this->pdo = new PDO("mysql:host=$hostname;port=$port;dbname=$databaseName", $login, $password,
             array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));

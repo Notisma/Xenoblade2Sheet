@@ -44,9 +44,8 @@ abstract class AbstractRepository
         $values = array("Tag" => $primKeyValue);
         $pdoStatement->execute($values);
         $object = $pdoStatement->fetch();
-        if (!$object) {
+        if (!$object)
             return null;
-        }
         return $this->constructFromArray($object);
     }
 

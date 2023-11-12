@@ -8,8 +8,10 @@ use XC2S\Model\DataObject\DriverCombo;
 
 class DriverComboRepo extends AbstractRepository
 {
-    public static function printAvalaibleCombos(string $driver, string $weaponClass, string $reaction): void
+    public static function getAvalaibleCombos(string $driver, string $weaponClass, string $reaction): array
     {
+        $combis = array();
+
         $params = array();
         foreach (['driver', 'weaponClass', 'reaction'] as $parameter) {
             if ($$parameter != "__empty") {
@@ -24,11 +26,12 @@ class DriverComboRepo extends AbstractRepository
 
         $prep->execute($params);
 
-        foreach ($prep as $tuple) {
-            print_r($tuple);
-        }
+        foreach ($prep as $tuple)
+            $combis[] = "$tuple[driver] - $tuple[weaponClass] - $tuple[reaction]";
+
+        return $combis;
     }
-    
+
     protected function getTableName(): string
     {
         return 'X_DriverCombo';

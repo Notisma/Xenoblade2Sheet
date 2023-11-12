@@ -40,7 +40,8 @@ class ControllerDriverCombo extends ControllerMain
         if (!isset($_POST['driver']) || !isset($_POST['weapon']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-        DriverComboRepo::printAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction']);
-        //self::displayView("viewList.php", ['combinations' => $combis]);
+        self::displayView("viewList.php", [
+            'combinations' => DriverComboRepo::getAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction'])
+        ]);
     }
 }

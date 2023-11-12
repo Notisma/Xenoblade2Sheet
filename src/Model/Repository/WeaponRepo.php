@@ -7,13 +7,6 @@ use XC2S\Model\DataObject\AbstractDataObject;
 
 class WeaponRepo extends AbstractRepository
 {
-    public string $name;
-
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
-
     protected function getTableName(): string
     {
         return 'X_Weapon';

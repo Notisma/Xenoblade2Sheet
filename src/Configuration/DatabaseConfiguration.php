@@ -2,7 +2,7 @@
 
 namespace XC2S\Configuration;
 
-class Configuration
+class DatabaseConfiguration
 {
     /*
     static private array $config = array(
