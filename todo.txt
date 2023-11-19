@@ -1,5 +1,4 @@
 TODO LIST
 
-- Pouvoir modifier le driver d'une userblade, ou l'enlever.
 - Faire des userteams
 - Lier à chaque blade son image

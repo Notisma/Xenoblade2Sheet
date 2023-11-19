@@ -6,7 +6,7 @@ foreach ($groupedUserBlades as $groupName => $blades) {
         <ul>
             ";
     foreach ($blades as $blade)
-        echo "<li><a href='?controller=TeamBuilder&action=displayBladeDetails&ublade_id=$blade->id'>$blade->bladeName</a></li>";
+        echo "<li><a href='?controller=Blade&action=displayBladeDetails&ublade_id=$blade->id'>$blade->bladeName</a></li>";
     echo "
         </ul>
     ";
@@ -17,6 +17,6 @@ foreach ($groupedUserBlades as $groupName => $blades) {
 <ul>
     <?php
     foreach ($nonUserBlades as $b)
-        echo "<li > $b->name(<a href = '?controller=TeamBuilder&action=addBladeToUser&blade=$b->name' > obtenue ?</a >)</li > ";
+        echo "<li > $b->name(<a href = '?controller=Blade&action=addBladeToUser&blade=$b->name' > obtenue ?</a >)</li > ";
     ?>
 </ul>

@@ -1,6 +1,6 @@
 <h2><?= $ublade->bladeName ?></h2>
 <h3>Bonded driver :</h3>
-<form action='?controller=TeamBuilder&action=changeBondedDriver&ublade_id=<?= $ublade->id ?>' method='post'>
+<form action='?controller=Blade&action=changeBondedDriver&ublade_id=<?= $ublade->id ?>' method='post'>
     <?php
     foreach ((new \XC2S\Model\Repository\DriverRepo())->getIdList() as $driver) {
         echo "
@@ -12,4 +12,7 @@
     }
     ?>
     <button type="submit">Submit</button>
+</form>
+<form action="?controller=Blade&action=removeBladeFromUser&ublade=<?= $ublade->id ?>" method="post">
+    <button type="submit">Remove</button>
 </form>

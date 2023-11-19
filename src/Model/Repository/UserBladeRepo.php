@@ -51,18 +51,44 @@ class UserBladeRepo extends AbstractRepository
         return false;
     }
 
+    public function userBladeExists(string $userBladeId): bool
+    {
+        $ublades = self::getDataObjectList();
 
-    protected function getTableName(): string
+        foreach ($ublades as $b)
+            if ($b->id == $userBladeId)
+                return true;
+
+        return false;
+    }
+
+    public
+    function userHasUserBlade(string $login, string $ubladeId): bool
+    {
+        $userblades = self::getDataObjectList();
+
+        foreach ($userblades as $b)
+            if ($b->id == $ubladeId && $b->loginUser === $login)
+                return true;
+
+        return false;
+    }
+
+
+    protected
+    function getTableName(): string
     {
         return "X_UserBlade";
     }
 
-    protected function getPrimaryKeyName(): string
+    protected
+    function getPrimaryKeyName(): string
     {
         return "id";
     }
 
-    protected function getColumnNames(): array
+    protected
+    function getColumnNames(): array
     {
         return [
             'loginUser',
@@ -71,7 +97,8 @@ class UserBladeRepo extends AbstractRepository
         ];
     }
 
-    public function constructFromArray(array $dataObjectArray): AbstractDataObject
+    public
+    function constructFromArray(array $dataObjectArray): AbstractDataObject
     {
         return new UserBlade(
             $dataObjectArray['id'],
