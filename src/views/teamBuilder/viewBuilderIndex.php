@@ -4,4 +4,11 @@
 <a href="?controller=Blade&action=displayBladeManager">Modifier ses lames</a>
 
 <h3>Teams</h3>
-<p>No team here for now ! Make a new one ?</p>
+<a href="?controller=TeamBuilder&action=displayTeams">Gérer ses équipes</a>
+
+<p>new team form :</p>
+<form action="?controller=TeamBuilder&action=createTeam" method="post">
+    <label for="nom_id">Nom de l'équipe : </label>
+    <input type="text" id="nom_id" name="teamLabel" required maxlength="50">
+    <button type="submit">Créer</button>
+</form>

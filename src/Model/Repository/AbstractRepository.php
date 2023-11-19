@@ -76,6 +76,27 @@ abstract class AbstractRepository
         $pdoStatement->execute($tags);
     }
 
+    public function createObjectIfAutoIncr(AbstractDataObject $object): void
+    {
+        $clePrim = $this->getPrimaryKeyName();
+        $fields = "";
+        $values = "";
+        $tags = array();
+        foreach ($this->getColumnNames() as $nomColonne) {
+            if ($nomColonne != $clePrim) {
+                $fields .= "$nomColonne, ";
+                $values .= ":" . $nomColonne . "Tag, ";
+                $tags[$nomColonne . "Tag"] = $object->toArray()[$nomColonne];
+            }
+        }
+        $fields = substr($fields, 0, -2);
+        $values = substr($values, 0, -2);
+        $sql = "INSERT INTO " . $this->getTableName() . " ($fields) VALUES ($values);";
+
+        $pdoStatement = DatabaseConnection::getPdo()->prepare($sql);
+        $pdoStatement->execute($tags);
+    }
+
     public function updateObject(AbstractDataObject $object): void
     {
         $sql = "UPDATE " . $this->getTableName() . " SET ";

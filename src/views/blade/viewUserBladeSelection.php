@@ -17,6 +17,6 @@ foreach ($groupedUserBlades as $groupName => $blades) {
 <ul>
     <?php
     foreach ($nonUserBlades as $b)
-        echo "<li > $b->name(<a href = '?controller=Blade&action=addBladeToUser&blade=$b->name' > obtenue ?</a >)</li > ";
+        echo "<li > $b->name (<a href = '?controller=Blade&action=addBladeToUser&blade=$b->name' >obtenue ?</a>)</li >";
     ?>
 </ul>

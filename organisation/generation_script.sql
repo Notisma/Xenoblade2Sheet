@@ -165,11 +165,11 @@ CREATE TABLE `X_UserDriver`
 CREATE TABLE `X_UserTeam`
 (
     `idTeam`  int(11)                      NOT NULL,
-    `label`   varchar(50) COLLATE utf8_bin DEFAULT NULL,
+    `label`   varchar(50) COLLATE utf8_bin NOT NULL,
     `login`   varchar(50) COLLATE utf8_bin NOT NULL,
-    `driver1` int(11)                      NOT NULL,
-    `driver2` int(11)                      DEFAULT NULL,
-    `driver3` int(11)                      DEFAULT NULL
+    `driver1` int(11) DEFAULT NULL,
+    `driver2` int(11) DEFAULT NULL,
+    `driver3` int(11) DEFAULT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
