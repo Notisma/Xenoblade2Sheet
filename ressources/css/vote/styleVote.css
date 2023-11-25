@@ -1,0 +1,28 @@
+#subPage img {
+    height: 400px;
+    margin: 0 1%;
+}
+
+/* HIDE BUTTON */
+#subPage [type=radio] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+#subPage [type=radio] + img {
+    cursor: pointer;
+}
+
+/* CHECKED STYLES */
+#subPage [type=radio]:checked + img {
+    outline-color: red;
+    outline-style: groove;
+  border: 5px solid #555;
+}
+
+#id_submit {
+    margin: 2% 0 1% 1%;
+    width: 30%;
+}

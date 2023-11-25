@@ -30,7 +30,7 @@
 
 <h2><?= $pageTitle ?></h2>
 
-<section>
+<section id="subPage">
     <?php require __DIR__ . "/$path"; ?>
 </section>
 

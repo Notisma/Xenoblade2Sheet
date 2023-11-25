@@ -136,7 +136,8 @@ VALUES ('Break'),
 
 CREATE TABLE `X_SavedUser`
 (
-    `login` varchar(50) COLLATE utf8_bin NOT NULL
+    `login` varchar(50) COLLATE utf8_bin NOT NULL,
+    `vote` varchar(10) COLLATE utf8_bin
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;

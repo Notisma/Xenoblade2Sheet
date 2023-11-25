@@ -21,6 +21,7 @@ class SavedUserRepo extends AbstractRepository
     {
         return [
             'login',
+            'vote'
         ];
     }
 
@@ -28,6 +29,7 @@ class SavedUserRepo extends AbstractRepository
     {
         return new SavedUser(
             $dataObjectArray['login'],
+            $dataObjectArray['vote']
         );
     }
 }
