@@ -54,7 +54,7 @@ class ControllerConnection extends ControllerMain
 
     private static function signUp(string $login): void
     {
-        $userDO = new SavedUser($login);
+        $userDO = new SavedUser($login, null);
         (new SavedUserRepo())->createObject($userDO);
         self::logIn($login);
     }
