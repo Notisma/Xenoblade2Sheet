@@ -28,7 +28,7 @@ class ControllerDriverCombo extends ControllerMain
             ${"html" . $currentCategory} = $code;
         }
 
-        self::displayViewInBody("Driver Combo", "viewDriverCombo.php", [
+        self::displayViewInBody("Driver Combo", "driverCombo/viewDriverCombo.php", [
             'htmlDriver' => $htmlDriver,
             'htmlWeaponClass' => $htmlWeapon,
             'htmlReaction' => $htmlReaction
@@ -40,7 +40,7 @@ class ControllerDriverCombo extends ControllerMain
         if (!isset($_POST['driver']) || !isset($_POST['weapon']) || !isset($_POST['reaction']))
             self::displayError("Il faut arriver à cette page normalement !");
 
-        self::displayView("viewList.php", [
+        self::displayView("driverCombo/viewList.php", [
             'combinations' => DriverComboRepo::getAvalaibleCombos($_POST['driver'], $_POST['weapon'], $_POST['reaction'])
         ]);
     }

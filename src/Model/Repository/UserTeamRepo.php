@@ -56,9 +56,6 @@ class UserTeamRepo extends AbstractRepository
             'idTeam',
             'label',
             'login',
-            'driver1',
-            'driver2',
-            'driver3',
         ];
     }
 
@@ -68,9 +65,6 @@ class UserTeamRepo extends AbstractRepository
             $dataObjectArray['idTeam'],
             $dataObjectArray['label'],
             $dataObjectArray['login'],
-            $dataObjectArray['driver1'],
-            $dataObjectArray['driver2'],
-            $dataObjectArray['driver3'],
         );
     }
 }

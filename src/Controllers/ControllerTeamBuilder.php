@@ -51,7 +51,7 @@ class ControllerTeamBuilder extends ControllerMain
         if (UserConnection::isConnected()) return false;
 
         else {
-            self::displayViewInBody("TeamBuilder", 'teamBuilder/viewBuilderLoggedOut.php');
+            self::displayViewInBody("TeamBuilder", 'viewBuilderLoggedOut.php');
             return true;
         }
     }
